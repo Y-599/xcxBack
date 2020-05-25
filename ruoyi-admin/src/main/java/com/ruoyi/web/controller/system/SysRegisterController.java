@@ -26,7 +26,7 @@ public class SysRegisterController extends BaseController
     @Autowired
     private ISysConfigService configService;
 
-    @GetMapping("/register")
+        @GetMapping("/register")
     public String register()
     {
         return "register";

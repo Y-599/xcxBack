@@ -1,0 +1,86 @@
+@layout("/common/_form.html",{js:["/assets/admin/customer/customer_add.js"]}){
+
+<form class="layui-form" id="customerForm" lay-filter="customerForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">基本信息</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="id" type="hidden"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">客户编号</label>
+                        <div class="layui-input-block">
+                            <input id="num" name="num" value="${num}" placeholder="请输入客户编号" type="text" class="layui-input" lay-verify="" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">客户名称</label>
+                        <div class="layui-input-block">
+                            <input id="name" name="name" placeholder="请输入客户名称" type="text" class="layui-input" lay-verify=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系人</label>
+                        <div class="layui-input-block">
+                            <input id="contact" name="contact" placeholder="请输入联系人" type="text" class="layui-input" lay-verify="" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-block">
+                            <input id="phone" name="phone" placeholder="请输入联系电话" type="text" class="layui-input" lay-verify="" />
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">联系地址</label>
+                        <div class="layui-input-block">
+                            <input id="addr" name="addr" placeholder="请输入联系地址" type="text" class="layui-input" lay-verify=""/>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">等级</label>
+                        <div class="layui-input-block">
+                            <select name="level" lay-filter="level">
+                                <option value="1" selected="">散客</option>
+                                <option value="2">普通</option>
+                                <option value="3">重要</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">要求</label>
+                        <div class="layui-input-block">
+                            <select name="requires" lay-filter="requires">
+                                <option value="1" selected="">严格</option>
+                                <option value="2">普通</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">结算方式</label>
+                        <div class="layui-input-block">
+                            <select name="settle" lay-filter="settle">
+                                <option value="1" selected="">月结</option>
+                                <option value="2">现金</option>
+                                <option value="3">记账</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input id="note" name="note" placeholder="请输入备注" type="text" class="layui-input" lay-verify=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</button>
+        <button type="reset" class="layui-btn layui-btn-primary" ew-event="closeDialog">&emsp;取消&emsp;</button>
+    </div>
+
+</form>
+
+@}

@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ruoyi.web.wexin.emali.mapper.EmailMapper">
+	<resultMap id="popjMap"
+			   type="com.ruoyi.web.wexin.emali.domain.EmailRexPopj">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="phone_account" property="phoneAccount"/>
+		<result column="bank_card" property="bankCard"/>
+		<result column="mail_account" property="mailAccount"/>
+		<result column="contract" property="contract"/>
+		<result column="contract_false" property="contractFlase"/>
+		<result column="id_cart_false" property="idCartFlase"/>
+		<result column="address" property="address"/>
+		<result column="detail" property="detail"/>
+		<result column="just_card" property="justCard"/>
+		<result column="versa_card" property="versaCard"/>
+		<result column="auditing" property="auditing"/>
+		<result column="salt" property="salt"/>
+		<result column="phone_code" property="phoneCode"/>
+		<result column="phone_check" property="phoneCheck"/>
+		<result column="created_user" property="createdUser"/>
+		<result column="created_time" property="createdTime"/>
+		<result column="modified_user" property="modifiedUser"/>
+		<result column="earn_year" property="earnYear"/>
+		<result column="addearn_year" property="addearnYear"/>
+		<result column="dataline_time" property="datalineTime"/>
+		<result column="apply_clear" property="applyClear"/>
+		<result column="production" property="production"/>
+		<result column="product_check" property="productCheck"/>
+		<result column="product_result" property="productResult"/>
+
+	</resultMap>
+
+
+
+	<insert id="insert"
+		useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO email_check (
+				id,checks,code,
+		) VALUES (
+				#{id},#{check},#{code}
+		)
+	</insert>
+
+	<insert id="savePhoneCode"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO email_check (
+				id,phone_check,phone_code
+		) VALUES (
+				#{id},#{phoneCheck},#{phoneCode}
+		)
+	</insert>
+	<insert id="insertMailRexInfo"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO user_info (
+				id,mail_account,password,salt
+		) VALUES (
+				#{id},#{mailAccount},#{password},#{salt}
+		)
+	</insert>
+
+	<insert id="insertPhoneRexInfo"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO user_info (
+				id,phone_account,password,salt,detail
+		) VALUES (
+				#{id},#{phoneAccount},#{password},#{salt},#{detail}
+		)
+	</insert>
+	<insert id="savaproduct"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO money_add (
+				phone_account,production
+		) VALUES (
+				#{phoneAccount},#{production}
+
+		)
+	</insert>
+	<insert id="addEarns"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO earn_money (
+				production,earn_year,dataline_time
+		) VALUES (
+			#{production},#{earnYear},#{datalineTime}
+
+		)
+	</insert>
+	<insert id="savaproduct2"
+			useGeneratedKeys="true"
+			keyProperty="id">
+		INSERT INTO earn_money (
+				production
+		) VALUES (
+				#{production}
+
+		)
+	</insert>
+	<select id="selcectBymail"
+			resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+			user_info
+		WHERE
+			mail_account=#{mailAccount}
+	</select>
+	<select id="getproducts"
+			resultMap="popjMap">
+		SELECT
+			 distinct production
+		FROM
+			money_add
+		WHERE
+			phone_account=#{phoneAccount}
+	</select>
+	<select id="selectProduct"
+			resultType="java.lang.Integer">
+		SELECT
+				COUNT(*)
+		FROM
+		money_add
+		WHERE
+			production=#{production}
+	</select>
+
+	<select id="selectAllEarn"
+			resultType="java.lang.Integer">
+		SELECT
+			sum(earn_year)
+		FROM
+			earn_money
+        where
+            production =#{production}
+	</select>
+
+
+
+    <select id="selectAllByPhone"
+			resultMap="popjMap">
+		SELECT
+		*
+		FROM
+			user_info
+		WHERE
+			phone_account=#{phoneAccount}
+	</select>
+	<select id="selcectByphone"
+			resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+			user_info
+		WHERE
+			phone_account=#{phoneAccount}
+	</select>
+	<select id="checkHistry"
+			resultMap="popjMap">
+		SELECT
+			*
+		FROM
+			earn_money
+		WHERE
+			 dataline_time  between #{beginDate} and  #{beginEnd}
+			 and production =#{production}
+
+	</select>
+	<select id="selcectBackUser"
+			resultMap="popjMap">
+		SELECT
+			*
+		FROM
+			earn_money
+		WHERE
+			 dataline_time  between #{beginDate} and  #{beginEnd}
+			 and production =#{production}
+
+	</select>
+	<select id="getjifen"
+			resultType="java.lang.Integer">
+		SELECT
+		 	sum(addearn_year)
+		FROM
+		money_add	 left join (select * from (select * from earn_money  order by  dataline_time  desc)as a
+
+ 		group by a.production)as  d
+		on
+			d.production=money_add.production
+		where
+			phone_account=#{phoneAccount}
+	</select>
+	<select id="selectIdCardByPhone"
+			resultType="String">
+		SELECT
+			just_card
+		FROM
+			user_info
+		WHERE
+			phone_account=#{phoneAccount}
+	</select>
+	<select id="findByCheck"
+			resultType="String">
+		SELECT
+			code
+		FROM
+			email_check
+		WHERE
+			checks=#{check}
+	</select>
+    <select id="findPhoneByCheck"
+            resultType="String">
+		SELECT
+			phone_code
+		FROM
+			email_check
+		WHERE
+			phone_check=#{phoneCheck}
+	</select>
+
+	<select id="selcectXCXUser"
+			resultMap="popjMap">
+		SELECT
+			detail,auditing,
+			contract_false,id_cart_false
+		FROM
+			user_info
+		WHERE
+			phone_account=#{phoneAccount}
+	</select>
+	<select id="getProPress"
+			resultMap="popjMap">
+		SELECT
+			*
+		FROM
+			money_add
+		WHERE
+			phone_account=#{phoneAccount}
+	</select>
+
+
+	<update id="UInsertJustId">
+		UPDATE
+			user_info
+		SET
+			just_card=#{justCard}
+
+		WHERE
+			phone_account=#{phoneAccount}
+	</update>
+	<update id="UInsertVerId">
+		UPDATE
+			user_info
+		SET
+			versa_card=#{versaCard}
+
+		WHERE
+			phone_account=#{phoneAccount}
+	</update>
+	<update id="delectXcxMoney">
+		UPDATE
+			earn_money
+		SET
+			apply_clear=#{applyClear}
+
+		WHERE
+			production=#{production}
+	</update>
+	<delete id="agreeDelectXcxMoney">
+		delete
+		from  earn_money
+		where
+					production=#{production}  and  			apply_clear=#{applyClear}
+	</delete>
+
+    <update id="UcontractId">
+		UPDATE
+			user_info
+		SET
+			contract=#{contract}
+
+		WHERE
+			phone_account=#{phoneAccount}
+	</update>
+
+
+	<update id="UInsertPhoneInfo">
+		UPDATE
+			user_info
+		SET
+
+			username=#{usernames},
+			mail_account=#{mailAccount},
+			bank_card=#{bankCard},
+			address=#{address},
+			created_time=#{datalineTime}
+		WHERE
+			phone_account=#{phoneAccount}
+	</update>
+	<update id="chagePassword">
+		UPDATE
+			user_info
+		SET
+			password=#{password}
+		WHERE
+			phone_account=#{phoneAccount}
+	</update>
+	<update id="insersAllMoney">
+		UPDATE
+			earn_money
+		SET
+			addearn_year=#{allmoney}
+		WHERE
+			production=#{phoneAccount}
+	</update>
+    <update id="UpdataNewPassword">
+		UPDATE
+			user_info
+		SET
+			password=#{password},salt=#{salt}
+		WHERE
+			phone_account=#{phoneAccount}
+	</update>
+	<select id="selcectUser"
+			resultMap="popjMap">
+		SELECT *
+		FROM
+			user_info
+
+	</select>
+    <select id="selectInfo"
+            resultMap="popjMap">
+		SELECT
+		username,mail_account,bank_card,address
+		FROM
+			user_info
+        where
+            phone_account=#{phoneAccount}
+	</select>
+
+	<select id="selectReadEarn"
+			resultMap="popjMap">
+		SELECT
+		 	*
+		FROM
+		money_add
+		left join (select * from (select * from earn_money  order by  dataline_time  desc) as a
+ 		group by a.production) as d
+		on
+			d.production=money_add.production
+		where
+			phone_account=#{phoneAccount}
+
+	</select>
+	<select id="getxcxEarns"
+			resultMap="popjMap">
+		SELECT
+		 	*
+		FROM
+		money_add	 left join (select * from (select * from earn_money  order by  dataline_time  desc)as  a
+ group by a.production)as  d
+		on
+			d.production=money_add.production
+		where
+			phone_account=#{phoneAccount}
+		and
+			addearn_year !='null'
+
+	</select>
+
+	<update id="updateUserStatusForInfo">
+		update user_info set
+
+		<if test="type == 1">
+			<if test="status == 1">
+				auditing = '审核通过',id_cart_false="--"
+			</if>
+			<if test="status == 2">
+				auditing = '审核不通过',id_cart_false = #{emailPopj.idCartFlase}
+			</if>
+		</if>
+		<if test="type == 2">
+			<if test="status == 1">
+				detail = '审核通过',contract_false="--"
+			</if>
+			<if test="status == 2">
+				detail= '审核不通过',contract_false = #{emailPopj.contractFlase}
+			</if>
+
+		</if>
+		where id = #{emailPopj.id}
+	</update>
+
+<update id="updataPass">
+	update money_add set
+			product_check ='审核通过',
+			product_result ='--'
+	where
+		production= #{production}
+</update>
+<update id="updataNotPass">
+	update money_add set
+			product_check ='审核不通过',
+			product_result =#{productResult}
+	where
+		production= #{production}
+</update>
+
+</mapper>
+

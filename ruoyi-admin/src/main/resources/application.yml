@@ -1,4 +1,5 @@
 # 项目相关配置
+
 ruoyi:
   # 名称
   name: RuoYi
@@ -10,9 +11,14 @@ ruoyi:
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
   profile: D:/ruoyi/uploadPath
+
   # 获取ip地址开关
   addressEnabled: true
-
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
@@ -48,6 +54,7 @@ spring:
     encoding: utf-8
     # 禁用缓存
     cache: false
+
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -69,7 +76,13 @@ spring:
     restart:
       # 热部署开关
       enabled: true
+  #邮箱发送配置文件
 
+  mail:
+    host: smtp.qq.com
+    username: 1415766959@qq.com
+    password: adczyrewvosjifhb
+    default-encoding: UTF-8
 # MyBatis
 mybatis:
     # 搜索指定包别名
@@ -79,15 +92,11 @@ mybatis:
     # 加载全局的配置文件
     configLocation: classpath:mybatis/mybatis-config.xml
 
-# PageHelper分页插件
-pagehelper: 
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql 
+
 
 # Shiro
 shiro:
+
   user:
     # 登录地址
     loginUrl: /login
@@ -99,6 +108,7 @@ shiro:
     captchaEnabled: true
     # 验证码类型 math 数组计算 char 字符
     captchaType: math
+
   cookie:
     # 设置Cookie的域名 默认空，即当前访问的域名
     domain: 
@@ -128,3 +138,4 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+

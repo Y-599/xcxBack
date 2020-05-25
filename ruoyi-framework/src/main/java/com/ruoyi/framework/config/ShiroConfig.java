@@ -241,6 +241,7 @@ public class ShiroConfig
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 对静态资源设置匿名访问
         filterChainDefinitionMap.put("/favicon.ico**", "anon");
+        filterChainDefinitionMap.put("/email/**", "anon");
         filterChainDefinitionMap.put("/ruoyi.png**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/docs/**", "anon");
@@ -249,11 +250,23 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/ajax/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/ruoyi/**", "anon");
+        filterChainDefinitionMap.put("/layui/**", "anon");
+        filterChainDefinitionMap.put("/common/upload", "anon");
+        filterChainDefinitionMap.put("/mobile/**", "anon");
+
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/phone_login/**", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/background/**", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/fileUploads", "anon,captchaValidate");
+
+        filterChainDefinitionMap.put("/profile/**", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/getaduite/**", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/savaproduct/**", "anon,captchaValidate");
+
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         // 系统权限列表

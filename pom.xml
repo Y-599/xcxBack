@@ -36,7 +36,13 @@
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
-        
+
+<!--			邮件发送-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-mail</artifactId>
+			</dependency>
+
             <!-- SpringBoot的依赖配置-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -45,7 +51,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            
+
             <!--阿里数据库连接池 -->
 			<dependency>
 	            <groupId>com.alibaba</groupId>

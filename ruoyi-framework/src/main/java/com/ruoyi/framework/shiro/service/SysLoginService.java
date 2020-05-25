@@ -27,8 +27,7 @@ import com.ruoyi.system.service.ISysUserService;
  * @author ruoyi
  */
 @Component
-public class SysLoginService
-{
+public class SysLoginService {
     @Autowired
     private SysPasswordService passwordService;
 

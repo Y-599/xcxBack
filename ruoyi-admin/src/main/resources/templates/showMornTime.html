@@ -1,0 +1,75 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/form.css" media="all">
+    <link rel="stylesheet" href="/css/admin.css" media="all">
+    <script src="/layui/layui.js"></script>
+
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+<form class="layui-form" id="customerForm" lay-filter="customerForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+
+                    <div class="layui-inline layui-col-md12" id="false" >
+                        <label class="layui-form-label">收益详情</label>
+                        <div class="layui-input-block">
+
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label">开始时间</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="begin_time" placeholder="请输入作品开始时间">
+                                </div>
+                            </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">结束时间</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" id="end_time" placeholder="请输入作品结束时间">
+                                    </div>
+
+                                </div>
+
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <a class="layui-btn" id="tijiao" >&emsp;查看&emsp;</a>
+    </div>
+
+</form>
+
+<script>
+
+
+    layui.use(['layer','laydate','table'],function () {
+        var laydate =layui.laydate;
+
+        laydate.render({
+            elem: '#begin_time'
+        });
+
+        laydate.render({
+            elem: '#end_time'
+        });
+
+
+
+
+    })
+
+    $("#tijiao").click(function () {
+        localStorage.setItem("begin_time",$("#begin_time").val());
+        localStorage.setItem("end_time",$("#end_time").val());
+        window.location.href = "/phone_login/showTime"
+    })
+</script>
+</body>
+</html>

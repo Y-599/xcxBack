@@ -1,0 +1,92 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/form.css" media="all">
+    <link rel="stylesheet" href="/css/admin.css" media="all">
+    <script src="/layui/layui.js"></script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+<form class="layui-form" id="customerForm" lay-filter="customerForm">
+    <div class="layui-fluid" style="padding-bottom: 75px;">
+        <div class="layui-card">
+            <div class="layui-card-header">作品审核</div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-row">
+                    <input name="id" type="hidden"/>
+                    <div class="layui-inline layui-col-md12">
+                        <label class="layui-form-label">审核状态</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="status" lay-filter="status" value="1" title="审核通过" checked="">
+                            <input type="radio" name="status" lay-filter="status" value="2" title="审核不通过">
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-md12" id="false" style="display: none;">
+                        <label class="layui-form-label">失败原因</label>
+                        <div class="layui-input-block">
+                            <input id="note" name="note" placeholder="请输入不通过原因" type="text" class="layui-input" lay-verify=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group-bottom text-center">
+        <a class="layui-btn" lay-filter="btnSubmit" lay-submit>&emsp;提交&emsp;</a>
+    </div>
+
+</form>
+<script>
+    layui.use(['form'],function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        $("input[name='id']").val(localStorage.getItem('uid'))
+        form.on('radio(status)', function(data){
+            if(data.value == 1){
+                $("#false").css("display","none")
+                form.render();
+            }else if(data.value == 2){
+                $("#false").css("display","inline-block")
+                form.render();
+            }
+        })
+        form.on('submit(btnSubmit)',function (data) {
+            if (data.field.status == 2){
+                if($("#note").val() == null || $("#note").val() == ""){
+                    layer.msg('未通过原因不能为空')
+                    return ;
+                }
+            }
+            $.ajax({
+                type:'get',
+                url: '/email/updateProduct',
+                data:{
+                    productResult:$("#note").val(),
+                    production:localStorage.getItem('shenheizuopingName')
+                },
+                success:function (result) {
+                    if(result.state == 200){
+                        layer.msg("操作成功", {
+                            icon: 1,
+                            time: 3000,
+                            end: function () {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                            }
+                        });
+                    }else {
+                        layer.msg(result.message);
+                    }
+
+                },
+                error:function () {
+                    layer.msg("服务器异常");
+                }
+            })
+        })
+        form.render();
+    })
+</script>
+</body>
+</html>

@@ -16,7 +16,7 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 @Service("permission")
-public class PermissionService
+public class    PermissionService
 {
     private static final Logger log = LoggerFactory.getLogger(PermissionService.class);
 
